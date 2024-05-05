@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.util.Random
+import java.util.*
+import kotlin.collections.ArrayList
 
 class NewsTitleFragment: Fragment() {
 
@@ -23,8 +27,8 @@ class NewsTitleFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val newsContentFragment = activity?.findViewById<View>(R.id.newsContentLayout)
-        val isTwoPane = newsContentFragment != null
+        val newsContentLayout = activity?.findViewById<FrameLayout>(R.id.newsContentLayout)
+        val isTwoPane = newsContentLayout != null
         val layoutManager = LinearLayoutManager(activity)
         val newsTitleRecyclerView = activity?.findViewById<RecyclerView>(R.id.newsTitleRecyclerView)
         newsTitleRecyclerView?.layoutManager = layoutManager
@@ -50,8 +54,7 @@ class NewsTitleFragment: Fragment() {
         return builder.toString()
     }
 
-    inner class NewsAdapter(val newsList: List<News>) :
-        RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+    inner class NewsAdapter(val newsList: List<News>) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val newsTitle: TextView = view.findViewById(R.id.newsTitle)
         }
@@ -61,16 +64,15 @@ class NewsTitleFragment: Fragment() {
             val holder = ViewHolder(view)
 
             holder.itemView.setOnClickListener {
-                val news = newsList[holder.adapterPosition]
+                val news = newsList[holder.bindingAdapterPosition]
                 if (isTwoPane) {
                     // 如果是双页模式，则刷新NewsContentFragment中的内容
-                    val newsContentFrag = activity?.findViewById<View>(R.id.newsContentFrag)
+                    val newsContentFrag = activity?.findViewById<FrameLayout>(R.id.newsContentFrag)
                     val fragment = newsContentFrag as NewsContentFragment
                     fragment.refresh(news.title, news.content)
                 } else {
                     // 如果是单页模式，则直接启动NewsContentActivity
-                    NewsContentActivity.actionStart(parent.context, news.title,
-                        news.content)
+                    NewsContentActivity.actionStart(parent.context, news.title, news.content)
                 }
             }
             return holder

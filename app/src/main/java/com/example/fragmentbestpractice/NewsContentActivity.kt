@@ -26,7 +26,7 @@ class NewsContentActivity: AppCompatActivity() {
 
         val title = intent.getStringExtra("news_title")
         val content = intent.getStringExtra("news_content")
-        val newsContentFrag = findViewById<RelativeLayout>(R.id.newsContentFrag)
+        val newsContentFrag = findViewById<LinearLayout>(R.id.newsContentFrag)
 
         if (title != null && content != null) {
             //这个as NewsContentFragment是一定要写的，不然就找不到refresh方法.

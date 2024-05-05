@@ -1,6 +1,5 @@
 package com.example.fragmentbestpractice
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,7 @@ class NewsContentFragment : Fragment() {
 
     fun refresh(title: String, content: String) {
         //有什么方法能避免频繁判空吗？
-        val contentLayout = activity?.findViewById<LinearLayout>(R.id.contentLayout)
+        val contentLayout: LinearLayout? = activity?.findViewById(R.id.contentLayout)
         val newsTitle = activity?.findViewById<TextView>(R.id.newsTitle)
         val newsContent = activity?.findViewById<TextView>(R.id.newsContent)
 

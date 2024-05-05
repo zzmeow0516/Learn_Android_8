@@ -1,5 +1,5 @@
 package com.example.fragmentbestpractice
 
-class News(title: String, content: String){
+class News(val title: String, val  content: String){
 
 }
